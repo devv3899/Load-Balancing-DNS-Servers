@@ -1,0 +1,21 @@
+0. Names :-
+
+
+1. Briefly discuss how you implemented the LS functionality of tracking which TS responded to the query and timing out if neither TS responded.
+
+—> We have created a custom Thread class which contains a shared variable. This thread invokes 3 threads to take care of client request. The first and second requests are sent to TS1 and TS2 with a timeout of 5seconds on read system call, while the 3rd thread first sleeps for around 8 seconds, and then checks if none of the first two threads have succeeded. If not, it assumes that query was not successful by any TS, and it returns the error message.
+
+In case, any TS is able to successfully resolve the query, it returns the result to client and closes the socket. Also, it sets the value fo shared object, using which other threads know that the operation has already been completed.
+
+2. Are there known issues or functions that aren't working currently in your attached code? If so, explain.
+
+—> No issues, Everything is working fine.
+   
+3. What problems did you face developing code for this project?
+
+—> Synchronizing the threads so that if one threads respond back, other threads do not respond back to client.
+
+4. What did you learn by working on this project?
+
+—> Threads creating and effectively synchronizing them to avoid the race conditions.
+
